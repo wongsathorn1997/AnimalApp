@@ -25,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
     ArrayList<Integer> qid = new ArrayList<Integer>();//ตัวแปรrandomโจทย์
     String answer; //ตัวแปรเก็บคำตอบ
     int score = 0;//ตัวแปรเก็บตะแนน
+    String nameString;//รับค่าusername จากหน้า login
 
 
 
@@ -245,17 +246,18 @@ public class GameActivity extends AppCompatActivity {
         }//end if
         if (qid.isEmpty()) {//ถ้าทำครบทุกข้อแล้ว
             //Toast.makeText(getApplicationContext(), "คุณได้" + score + "คะแนน", Toast.LENGTH_SHORT).show();
-            dialogboxScore();
+            nameString = getIntent().getStringExtra("Name");//รับค่า username จากหน้า login
+            dialogboxScore(nameString);
         } else {//ยังแสดงไม่ครบ
             setQuestion(qid.remove(0));
         }
 
     }//end choiceAms() method
 
-    private void dialogboxScore() { //แสดงคะแนนในรูป dialogbox
+    private void dialogboxScore(String nameString) { //แสดงคะแนนในรูป dialogbox
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("สรุปคะแนน");
-        builder.setMessage("คุณได้ " + score + " คะแนน")
+        builder.setMessage("คุณ "+nameString+" ได้ " + score + " คะแนน")
             .setCancelable(false)
             .setPositiveButton("เล่นอีกครั้ง", new DialogInterface.OnClickListener() {
                 @Override
