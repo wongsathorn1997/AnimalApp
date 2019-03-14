@@ -1,6 +1,9 @@
 package sdu.cs.wongsathorn.animalapp;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -241,10 +244,35 @@ public class GameActivity extends AppCompatActivity {
             score++;//เพิ่มทีละ1คะแนน
         }//end if
         if (qid.isEmpty()) {//ถ้าทำครบทุกข้อแล้ว
-            Toast.makeText(getApplicationContext(), "คุณได้" + score + "คะแนน", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "คุณได้" + score + "คะแนน", Toast.LENGTH_SHORT).show();
+            dialogboxScore();
         } else {//ยังแสดงไม่ครบ
             setQuestion(qid.remove(0));
         }
 
     }//end choiceAms() method
+
+    private void dialogboxScore() { //แสดงคะแนนในรูป dialogbox
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("สรุปคะแนน");
+        builder.setMessage("คุณได้ " + score + " คะแนน")
+            .setCancelable(false)
+            .setPositiveButton("เล่นอีกครั้ง", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            })
+            .setNegativeButton("ออกจากเกม", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }//end dialogboxScore method
 }//end class
